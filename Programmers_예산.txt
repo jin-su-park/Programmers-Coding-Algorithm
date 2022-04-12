@@ -23,10 +23,10 @@ class Solution {
                 answer=i;
                 break;
             }
+}
             if(result<=budget){
                 answer=d.length;
             }
-        }
         return answer;
     }
 }
