@@ -1,0 +1,73 @@
+프로그래머스
+모음사전
+문제)
+사전에 알파벳 모음 'A', 'E', 'I', 'O', 'U'만을 사용하여 만들 수 있는, 길이 5 이하의 모든 단어가 수록되어 있습니다. 사전에서 첫 번째 단어는 "A"이고, 그다음은 "AA"이며, 마지막 단어는 "UUUUU"입니다.
+
+단어 하나 word가 매개변수로 주어질 때, 이 단어가 사전에서 몇 번째 단어인지 return 하도록 solution 함수를 완성해주세요.
+
+제한사항
+word의 길이는 1 이상 5 이하입니다.
+word는 알파벳 대문자 'A', 'E', 'I', 'O', 'U'로만 이루어져 있습니다.
+
+입출력 예
+word	result
+AAAAE	6
+AAAE	10
+I 	1563
+EIO	1189
+
+아이디어)
+하나씩 나열에서 정리해본 결과
+word		result
+A 		1
+AA		2
+AAA		3
+.
+AAAA		4
+.
+AAAAE		6
+. 
+.
+.
+AAAE		10
+.
+.
+.
+AAAI		16
+
+
+AAE		34
+
+->	마지막 자리 일경우 : 1씩 증가 
+	4번째 자리끼리는	: 6씩 증가 AAAA:4		AAAE:10
+	3번째 자리끼리는	: 31씩 증가 AAA:3		AAE:34
+
+각 자리를 처음 값으로 생각하고 증가시킨다.
+예) AAAI를 찾을 경우
+AAAA를 처음 값이라고 생각한다.따라서
+AAAA의 길이는 4이기 때문에 초기값은 4이고 4번째는 6씩 증가하기 때문에 I는 까지 가기 위해서 6을 2번 곱하고 더하면 된다.
+
+소스 코드
+class Solution {
+   public static int solution(String word) {
+		//자리 수의 길이를 통해 초기값을 설정
+		 int answer = word.length();
+		
+		//해당하는 단어가 몇번째에 위치해있는지 확인하기 위한 문자열
+		 String str="AEIOU";
+		
+		//각 자리에 대해 증가하는 값을 넣은 1차원 배열
+		 int[] Num_of_Increase= {781,156,31,6,1};
+		
+		// 문자열을 반복하면서 해당하는 자릿수에 대해 맞는 문자의 값을 곱하고 			answer에 계속 더한다.
+	        for (int i = 0; i < word.length(); i++) {
+	            answer += (Num_of_Increase[i] * str.indexOf(word.charAt(i)));
+	        }
+
+	        return answer;
+	}
+}
+
+
+
+
